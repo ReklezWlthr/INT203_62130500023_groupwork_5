@@ -34,44 +34,18 @@
         <span class="font-bold text-black text-xl">{{ liked }}</span>
       </div>
     </div>
-    <div class="w-full flex justify-end h-10" v-show="searchButton">
-      <i class="fas fa-search text-2xl cursor-pointer" @click="triggerSearch"></i>
-    </div>
-    <div class="mx-auto w-11/12 h-10 flex justify-center" v-show="searchBox">
-      <input v-model="search" class="border-2 rounded-md w-9/12 mr-3 focus:outline-none px-2 py-1"
-        placeholder="Enter Text to Search">
-      <button class="rounded-md px-2 py-1 bg-blue-200 focus:outline-none" @click="triggerSearch">Cancel</button>
-    </div>
-    <transition name="slide">
-      <div class="flex flex-wrap mx-auto bg-gray-200 px-5 py-3 rounded-md mt-3" v-show="canvas"
-        style="height: 18.5rem;">
-        <div class="w-full flex justify-end"><i class="fas fa-times text-2xl cursor-pointer" @click="closeCanvas"></i>
-        </div>
-        <div class="flex-wrap ml-3 w-full">
-          <i class="fas fa-chevron-left text-2xl cursor-pointer" @click="prev"></i>
-          <img class="w-9/12 inline-block rounded-xl mx-8" :src="photos[iter].src">
-          <i class="fas fa-chevron-right text-2xl cursor-pointer" @click="next"></i>
-        </div>
-      </div>
-    </transition>
-    <div class="w-full my-5" v-for="photo in filteredPhotos">
-      <img class="transition duration-300 w-48 inline-block rounded-xl mr-5 hover:shadow-md cursor-pointer"
-        :src="photo.src" @click="fav(photo.id)">
-      <transition name="bounce">
-        <i v-show="photo.faved" class="fas fa-heart text-red-500 text-2xl z-10 absolute -ml-14 mt-2"></i>
-      </transition>
-      <div class="inline-block">
-        <span class="block">{{ photo.photoDesc }}</span>
-        <i class="fas fa-search-plus text-xl mt-3 text-gray-300 cursor-pointer hover:text-gray-400 transition duration-300"
-          @click="showCanvas(photo.id)"></i>
-      </div>
-    </div>
-    <div class="w-full flex justify-center mt-5" v-if="notfound">
-      No Photos Found
-    </div>
+    <image-search :search-on="searchOn" @trigger-search="triggerSearch" @on-forward-search="searchAccept"></image-search>
+    <image-canvas :canvas="canvas" :photos="photos" :iter="iter" @close-canvas="closeCanvas" @prev="prev" @next="next"></image-canvas>
+    <image-list :photos="filteredPhotos" :not-found="notfound" @favorite="fav" @show-canvas="showCanvas"></image-list>
   </div>
   <!-- my main.js -->
   <script src="./main.js"></script>
+  <script src="./components/ImageList.js"></script>
+  <script src="./components/ImageSearch.js"></script>
+  <script src="./components/ImageCanvas.js"></script>
+  <script>
+    mount = app.mount('#app');
+  </script>
 </body>
 
 </html>

@@ -1,12 +1,11 @@
-const app = {
+const app = Vue.createApp({
     data() {
         return {
-            searchButton: true,
-            searchBox: false,
-            search: '',
+            searchOn: false,
+            input: '',
+            notfound: false,
             iter: 0,
             canvas: false,
-            notfound: false,
             photos: [{
                     id: 0,
                     src: 'https://www.planetware.com/photos-large/THA/thailand-railay-beach.jpg',
@@ -34,18 +33,13 @@ const app = {
                     photoDesc: 'Sukhothai Old City, Sukhothai',
                     faved: false,
                     collapse: false
-                },
-            ]
+                }
+            ],
         }
     },
     methods: {
         fav(index) {
             this.photos[index].faved = !this.photos[index].faved;
-        },
-        triggerSearch() {
-            this.searchBox = !this.searchBox;
-            this.searchButton = !this.searchButton;
-            this.search = '';
         },
         showCanvas(index) {
             this.canvas = true;
@@ -65,6 +59,13 @@ const app = {
             if (this.iter < 0) {
                 this.iter = this.photos.length - 1;
             }
+        },
+        searchAccept(input){
+            this.input = input;
+        },
+        triggerSearch() {
+            this.searchOn = !this.searchOn;
+            this.input = '';
         }
     },
     computed: {
@@ -76,10 +77,10 @@ const app = {
         },
         filteredPhotos() {
             this.notfound = false;
-            if (this.search == '') {
-                return this.photos
+            if (this.input == '') {
+                return this.photos;
             } else {
-                fp = this.photos.filter(n => n.photoDesc.toLowerCase().includes(this.search.toLowerCase()));
+                fp = this.photos.filter(n => n.photoDesc.toLowerCase().includes(this.input.toLowerCase()));
                 if (fp.length == 0) {
                     this.notfound = true;
                 } else {
@@ -88,5 +89,4 @@ const app = {
             }
         }
     }
-}
-mount = Vue.createApp(app).mount('#app')
+})
