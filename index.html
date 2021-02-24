@@ -34,8 +34,12 @@
         <span class="font-bold text-black text-xl">{{ liked }}</span>
       </div>
     </div>
-    <image-search :search-on="searchOn" @trigger-search="triggerSearch" @on-forward-search="searchAccept"></image-search>
-    <image-canvas :canvas="canvas" :photos="photos" :iter="iter" @close-canvas="closeCanvas" @prev="prev" @next="next"></image-canvas>
+    <image-search :search-on="searchOn" @trigger-search="triggerSearch" @on-forward-search="searchAccept">
+    </image-search>
+    <transition name="slide">
+      <image-canvas :canvas="canvas" :photos="photos" :iter="iter" @close-canvas="closeCanvas" @prev="prev"
+        @next="next"></image-canvas>
+    </transition>
     <image-list :photos="filteredPhotos" :not-found="notfound" @favorite="fav" @show-canvas="showCanvas"></image-list>
   </div>
   <!-- my main.js -->
