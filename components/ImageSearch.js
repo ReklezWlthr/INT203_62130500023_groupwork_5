@@ -1,13 +1,14 @@
 app.component('image-search', {
-    data(){
-        return {
-            search: ''
-        }
-    },
-    props: ['searchOn'],
-    template:
-        /*html*/
-        `<div class="w-full flex justify-end h-10" v-show="!searchOn">
+  emits: ['triggerSearch', 'onForwardSearch'],
+  data() {
+    return {
+      search: ''
+    }
+  },
+  props: ['searchOn'],
+  template:
+    /*html*/
+    `<div class="w-full flex justify-end h-10" v-show="!searchOn">
     <i class="fas fa-search text-2xl cursor-pointer" @click="$emit('triggerSearch')"></i>
   </div>
   <div class="mx-auto w-11/12 h-10 flex justify-center" v-show="searchOn">
@@ -17,9 +18,9 @@ app.component('image-search', {
   </div>
   `,
   methods: {
-      close(){
-          this.$emit('triggerSearch');
-          this.search = '';
-      }
+    close() {
+      this.$emit('triggerSearch');
+      this.search = '';
+    }
   }
 })

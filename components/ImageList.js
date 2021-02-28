@@ -1,4 +1,5 @@
 app.component('image-list', {
+  emits: ['favorite', 'showCanvas'],
     props: ['photos', 'notFound'],
     template:
         /*html*/
